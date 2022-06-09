@@ -1,7 +1,5 @@
 set -eu
 
-mkdir -p build
-
 ignores=$(find gitignore -name '*.gitignore')
 table="ignore_table.h"
 data="ignore_files.h"
