@@ -1,0 +1,34 @@
+name: Build
+on:
+  push:
+    branches:
+      - 'main'
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        target:
+          - 'aarch64-linux-gnu'
+          - 'aarch64-linux-musl'
+          - 'aarch64-macos-gnu'
+          - 'x86_64-linux-gnu'
+          - 'x86_64-linux-musl'
+          - 'x86_64-macos-gnu'
+          - 'x86_64-windows-gnu'
+          - 'arm-linux-musleabi'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v2
+      - name: Install Zig
+        uses: goto-bus-stop/setup-zig@default
+        with:
+          version: 0.9.0
+      - name: Build with zig cc
+        run: CC="zig cc" make
+      - uses: actions/upload-artifact@v3
+        with:
+          name: ignore-${{ matrix.target }}
+          path: ignore
