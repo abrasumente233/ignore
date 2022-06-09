@@ -30,7 +30,7 @@ jobs:
           version: 0.9.0
       - name: Build with zig cc
         run: |
-          CC="zig cc" make
+          CC="zig cc" TARGET="${{ matrix.target }}" make
           cp ignore .artifacts/ignore-${{ matrix.target }}
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
